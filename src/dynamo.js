@@ -17,11 +17,15 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 700
   },
   th: {
-    margin: "1px",
-    border: "1px solid black"
+    // padding: "10px",
+    fontWeight: "bold",
+    border: "1px solid red"
   },
+  // v: {
+  //   transform: "rotate(-90deg)"
+  // },
   td: {
-    margin: "1px",
+    // padding: "10px",
     border: "1px solid grey"
   }
 }));
@@ -51,31 +55,43 @@ export default function SpanningTable() {
                 <TableCell
                   className={classes.th}
                   colSpan={2}
-                >{`Condition ${cond}`}</TableCell>
+                >{`Condition-${cond}`}</TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rowHeaders.map((row) => (
-              <TableRow>
-                <TableHead>
-                  <TableCell
-                    className={classes.th}
-                    rowSpan={row.params.length + 1}
-                  >
-                    {row.group}
-                  </TableCell>
-                </TableHead>
-                {row.params.map((p) => (
-                  <TableRow>
-                    <TableCell className={classes.th}>{p}</TableCell>
-                  </TableRow>
-                ))}
-              </TableRow>
-            ))}
+            {rowHeaders.map((row, i) =>
+              row.params.map((p, j) => (
+                <TableRow>
+                  {j === 0 ? (
+                    <TableCell
+                      className={`${classes.th} ${classes.v}`}
+                      rowSpan={row.params.length}
+                    >
+                      {row.group}
+                    </TableCell>
+                  ) : null}
+                  <TableCell className={classes.th}>{p}</TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </Paper>
     </>
   );
 }
+/*
+cityValues.map((city, i) => {
+  const stateName = i === 0 ? <td rowSpan={cityValues.length + 1}>{state.name}</td> : null
+  const stateAbbreviation = i === 0 ? <td rowSpan={cityValues.length + 1}>{state.abbreviation}</td> : null
+  return (
+    <tr key={i}>
+      {stateName}
+      {stateAbbreviation}
+      <td>{city.name}</td>
+      <td>{city.metroPopulation}</td>
+    </tr>
+  )
+})
+*/
